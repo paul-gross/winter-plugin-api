@@ -6,8 +6,6 @@ contribution surface from `winter_plugin_api`, and typechecks
 `create_plugin() -> IWinterPlugin` in its own repo — with **zero dependency on
 winter-cli**.
 
-The authoring guide lives in the harness: `winter-harness:/architecture/plugin-author.md`.
-
 ## Why it exists
 
 winter loads a plugin's `plugin.py` into its own process, so at runtime
@@ -72,8 +70,7 @@ mirrored here as a major bump, in the same change.
 
 There is no automated conformance check wiring the two together today —
 winter-cli does **not** depend on this package. A future addition could pin
-winter-cli to a released version with conformance sentinels (the
-`winter-harness:/standards/protocol-conformance.md` pattern), so its concrete
+winter-cli to a released version with conformance sentinels, so its concrete
 `FeatureEnvironmentStatus` / `WorktreeRepoStatus` / `FeatureWorktree` /
 `StandaloneRepository` would have to satisfy these view Protocols and a model
 rename would fail winter-cli's own typecheck — turning a silent runtime
