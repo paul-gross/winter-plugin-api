@@ -11,9 +11,9 @@ dependency on winter-cli. Two layers:
   or implements: `PluginRegistration`, `TuiAction`, `ActionScope`, the action
   contexts, the decorator / panel / plugin Protocols.
 
-winter-cli keeps its own runtime copy of the seam and pins parity against this
-package with conformance sentinels; this package is the versioned source of
-truth plugin authors code against. See the README for the versioning policy.
+winter-cli keeps its own runtime copy of the seam, kept in sync with this package
+by hand; this package is the versioned source of truth plugin authors code
+against. See the README for the versioning policy.
 """
 
 from __future__ import annotations

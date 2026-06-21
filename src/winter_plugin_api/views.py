@@ -10,8 +10,8 @@ Because every member here is a plain attribute or a read-only property of a
 primitive / another view, the package has **zero dependency on winter-cli**. The
 real objects winter-cli passes (`FeatureEnvironmentStatus`, `WorktreeRepoStatus`,
 `FeatureWorktree`, `StandaloneRepository`, …) structurally satisfy these
-Protocols; winter-cli pins that with conformance sentinels so a model rename that
-breaks the seam fails *its* typecheck (see the package README, "Drift").
+Protocols by construction; winter-cli keeps its own copy of the seam in sync with
+this package by hand (see the package README, "Relationship to winter-cli").
 """
 
 from __future__ import annotations

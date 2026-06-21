@@ -4,7 +4,7 @@ These exercise the package the way a plugin author does: build the seam objects,
 implement a decorator against the view payloads, and confirm a `create_plugin()`
 factory typechecks as `IWinterPlugin`. The fakes below stand in for winter-cli's
 concrete models — they satisfy the view Protocols structurally, the same way the
-real models do (which winter-cli pins with its own conformance sentinels).
+real models do.
 """
 
 from __future__ import annotations

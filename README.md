@@ -58,21 +58,26 @@ It is a dev/test dependency, not a runtime one: winter supplies the contract at
 runtime when it loads your `plugin.py`. You pin it only so your own typechecker
 resolves the imports.
 
-## Drift is guarded at winter-cli's end
+## Relationship to winter-cli
 
 This package is a **deliberate, hand-curated copy** of winter-cli's seam — not a
 re-export of it. That is intentional: the narrow contract is cheap to maintain by
 hand, and keeping it separate lets the seam be versioned (semver) independently
 of winter-cli's **unversioned** domain model.
 
-winter-cli takes this package as a **dev/test dependency** and pins parity with
-conformance sentinels (the `winter-harness:/standards/protocol-conformance.md`
-pattern): its concrete `FeatureEnvironmentStatus` / `WorktreeRepoStatus` /
-`FeatureWorktree` / `StandaloneRepository` must satisfy these view Protocols, and
-its own `PluginRegistration` / `TuiAction` shapes must match the package's. A
-model rename that breaks the seam fails **winter-cli's** typecheck against the
-pinned api version — turning a silent runtime `AttributeError` into a compile
-error at the right end.
+winter-cli keeps its own runtime copy of the seam in
+`winter_cli/plugins/types.py` (the loader imports it; the dashboard constructs
+it). The two copies are **kept in sync by hand**: a seam rename in winter-cli is
+mirrored here as a major bump, in the same change.
+
+There is no automated conformance check wiring the two together today —
+winter-cli does **not** depend on this package. A future addition could pin
+winter-cli to a released version with conformance sentinels (the
+`winter-harness:/standards/protocol-conformance.md` pattern), so its concrete
+`FeatureEnvironmentStatus` / `WorktreeRepoStatus` / `FeatureWorktree` /
+`StandaloneRepository` would have to satisfy these view Protocols and a model
+rename would fail winter-cli's own typecheck — turning a silent runtime
+`AttributeError` into a compile error at the right end.
 
 ## Versioning policy
 
@@ -89,11 +94,11 @@ The package follows **semver**, and the version a plugin pins is a contract:
 - **Patch bump** — docs, typing-only fixes, no surface change.
 
 Pre-1.0 (`0.x`) the surface is still settling: treat a **minor** `0.x` bump as
-potentially breaking. winter-cli pins the exact version it conforms to (the api
-version that its conformance sentinels were written against) as its dev/test
-dependency; bump that pin in the same change that adapts winter-cli to a new api
-release. A plugin should pin the **lowest** api version exposing every name it
-uses, so it stays loadable against the widest range of winter builds.
+potentially breaking. A plugin should pin the **lowest** api version exposing
+every name it uses, so it stays loadable against the widest range of winter
+builds. (winter-cli does not depend on the package today; should it later pin a
+version to conform against, it would bump that pin in the same change that adapts
+it to a new api release.)
 
 ## Development
 
