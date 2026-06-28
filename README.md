@@ -59,22 +59,15 @@ resolves the imports.
 ## Relationship to winter-cli
 
 This package is a **deliberate, hand-curated copy** of winter-cli's seam — not a
-re-export of it. That is intentional: the narrow contract is cheap to maintain by
-hand, and keeping it separate lets the seam be versioned (semver) independently
-of winter-cli's **unversioned** domain model.
+re-export of it. Keeping it separate is the whole point: it lets the seam be
+versioned (semver) independently of winter-cli's **unversioned** domain model, so
+a plugin pins this package and never winter-cli itself.
 
-winter-cli keeps its own runtime copy of the seam in
-`winter_cli/plugins/types.py` (the loader imports it; the dashboard constructs
-it). The two copies are **kept in sync by hand**: a seam rename in winter-cli is
-mirrored here as a major bump, in the same change.
-
-There is no automated conformance check wiring the two together today —
-winter-cli does **not** depend on this package. A future addition could pin
-winter-cli to a released version with conformance sentinels, so its concrete
-`FeatureEnvironmentStatus` / `WorktreeRepoStatus` / `FeatureWorktree` /
-`StandaloneRepository` would have to satisfy these view Protocols and a model
-rename would fail winter-cli's own typecheck — turning a silent runtime
-`AttributeError` into a compile error at the right end.
+The mechanics of that decoupling — how winter-cli's own runtime copy of the seam
+(`winter_cli/plugins/types.py`, imported by its loader) is kept in sync with this
+package by hand, and the conformance checks that might one day wire the two
+together — are part of winter's plugin-authoring process, not this package's
+contract. See winter's **plugin-author conventions** for that side.
 
 ## Versioning policy
 
