@@ -93,10 +93,10 @@ it to a new api release.)
 ## Development
 
 ```bash
-mise run install     # uv sync
-mise run typecheck   # pyright
-mise run test        # pytest
-mise run lint        # ruff
+uv sync              # install
+uv run pyright       # typecheck
+uv run pytest        # test
+uv run ruff check .  # lint
 ```
 
 ## License
